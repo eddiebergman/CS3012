@@ -12,20 +12,23 @@ private:
     struct private_tag{};    
 
 public:
+    //single only nodes, can act as roots
     Node(const T& data)
         : Node(nullptr, data, private_tag()) {}
 
     Node(T&& data)
         : Node(nullptr, std::move(data), private_tag()) {}
 
+
     ~Node() = default;
 
-    Node(Node<T> &&) = default;
-    Node &operator=(Node<T> &&) = default;
+    Node(Node<T> &&) = delete;
     Node(const Node<T> &) = delete;
+    Node &operator=(Node<T> &&) = delete;
     Node &operator=(const Node<T> &) = delete;
 
-    //see comment @static struct private_tag{}
+    //see comment @struct private_tag{} at top
+    //branch nodes, can only be constructed from a a parent node
     explicit Node(const Node<T>* parent, const T& data, private_tag t) 
         :data_(data), 
         parent_(parent),
@@ -44,6 +47,7 @@ public:
     Node<T>* left() const { left_.get(); }
     Node<T>* right() const { right_.get(); }
     
+    //copy and move constructors for adding branches to nodes
     Node<T>* left(const T& data){ 
         left_ = std::make_unique<Node<T>>(this, data, private_tag()); 
         return left();
