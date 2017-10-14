@@ -20,14 +20,25 @@ public:
         : Node(nullptr, std::move(data), private_tag()) {}
 
     //see comment @static struct private_tag{}
+    explicit Node(const Node<T>* parent, const T& data, private_tag t) 
+        :data_(data), 
+        parent_(parent),
+        depth_(parent? parent->depth_ + 1 : 0) {}
+
     explicit Node(const Node<T>* parent, T&& data, private_tag t) 
-        :data_(std::forward<T>(data)), parent_(parent), depth_(parent? parent->depth_ + 1 : 0) {}
+        :data_(std::forward<T>(data)),
+         parent_(parent),
+        depth_(parent? parent->depth_ + 1 : 0) {}
 
 
+    //getters
+    int depth(){ return depth_; }
+    T& get() const { return data_; }
+    const Node<T>* parent(){ return parent_;}
     Node<T>* left() const { left_.get(); }
     Node<T>* right() const { right_.get(); }
-    T& get() const { return data_; }
     
+
     //forwarding as it may be lvalue binded to data (copy), might be rvalue (move)
     void left(T&& data){
         left_ = std::make_unique<Node<T>>(this, std::forward<T>(data), private_tag());
@@ -36,6 +47,7 @@ public:
     void right(T&& data)   { 
         right_ = std::make_unique<Node<T>>(this, std::forward<T>(data), private_tag()); 
     }
+
 
 
 private:

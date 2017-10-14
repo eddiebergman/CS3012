@@ -1,5 +1,9 @@
 #include <catch.hpp>
 
+#include <iostream>
+#include <memory>
+#include <node.hpp>
+
 SCENARIO("Lowest Common Ancestor on a binary tree"){
 
     GIVEN("A populated binary tree"){
