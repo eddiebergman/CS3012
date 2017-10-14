@@ -18,6 +18,13 @@ public:
     Node(T&& data)
         : Node(nullptr, std::move(data), private_tag()) {}
 
+    ~Node() = default;
+
+    Node(Node<T> &&) = default;
+    Node &operator=(Node<T> &&) = default;
+    Node(const Node<T> &) = delete;
+    Node &operator=(const Node<T> &) = delete;
+
     //see comment @static struct private_tag{}
     explicit Node(const Node<T>* parent, const T& data, private_tag t) 
         :data_(data), 
@@ -37,18 +44,22 @@ public:
     Node<T>* left() const { left_.get(); }
     Node<T>* right() const { right_.get(); }
     
-    void left(const T& data){ 
+    Node<T>* left(const T& data){ 
         left_ = std::make_unique<Node<T>>(this, data, private_tag()); 
+        return left();
     } 
-    void left(T&& data){ 
+    Node<T>* left(T&& data){ 
         left_ = std::make_unique<Node<T>>(this, std::move(data), private_tag()); 
+        return left();
     }
 
-    void right(const T& data){
+    Node<T>* right(const T& data){
         right_ = std::make_unique<Node<T>>(this, data, private_tag());
+        return right();
     }
-    void right(T&& data)   { 
+    Node<T>* right(T&& data)   { 
         right_ = std::make_unique<Node<T>>(this, std::move(data), private_tag()); 
+        return right();
     }
 
 
@@ -58,8 +69,8 @@ private:
     const int depth_;
     T data_;
 
-    std::unique_ptr<Node<T>> left_ = nullptr;
-    std::unique_ptr<Node<T>> right_ = nullptr;
+    std::unique_ptr<Node<T>> left_ = std::unique_ptr<Node<T>>();
+    std::unique_ptr<Node<T>> right_ = std::unique_ptr<Node<T>>();
     
 };
 

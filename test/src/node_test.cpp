@@ -2,6 +2,7 @@
 
 #include <string>
 #include <node.hpp>
+#include <iostream>
 
 SCENARIO("Constructing a node"){
 
@@ -92,4 +93,27 @@ SCENARIO("Constructing a node"){
         }
     }
 
+}
+
+SCENARIO("Node memory management tests"){
+    GIVEN("Given a constructed node and its branches"){
+        Node<int> n(10);
+        n.left(20)->left(30);
+        n.left()->right(35);
+        Node<int>* nl = n.left();
+        Node<int>* nll = n.left()->left();
+        Node<int>* nlr = n.left()->right();
+        WHEN("One of its branches is reassigned"){
+            n.left(40);
+            
+            //note: we can still use nl and nll without their branches but they're
+            //no longer reserved in memory or stack
+            THEN("The old branches should be free"){
+                //left node no longer had references to any other node
+                REQUIRE(!nl->left());
+                REQUIRE(!nl->right());
+        
+            }
+        }
+    }
 }
