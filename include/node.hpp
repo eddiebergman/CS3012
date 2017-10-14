@@ -32,7 +32,7 @@ public:
 
     //getters
     int depth() const { return depth_; }
-    T& get() const { return data_; }
+    T& get() { return data_; }
     const Node<T>* parent() const{ return parent_;}
     Node<T>* left() const { left_.get(); }
     Node<T>* right() const { right_.get(); }
