@@ -21,7 +21,8 @@ file(GLOB PROJ_SOURCES "${PROJ_SOURCES_PATH}/*.cpp")
 file(GLOB PROJ_HEADERS "${PROJ_INCLUDE_PATH}/*.hpp")
 
 ##set up the actual library
-
+add_library(${PROJ_NAME} INTERFACE)
+target_include_directories(${PROJ_NAME} INTERFACE ${PROJ_INCLUDE_PATH})
 #
 # Cmake lowest-common-ancestor : test
 #
@@ -42,7 +43,7 @@ set(TEST_SOURCES_PATH "${PROJECT_SOURCE_DIR}/test/src")
 file(GLOB TEST_SOURCES "${TEST_SOURCES_PATH}/*.cpp")
 
 add_executable(${TEST_NAME} ${TEST_SOURCES})
-target_link_libraries(${TEST_NAME} Catch)
+target_link_libraries(${TEST_NAME} Catch ${PROJ_NAME})
 
 #---------------
 # Ctest
