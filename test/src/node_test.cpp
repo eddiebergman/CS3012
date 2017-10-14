@@ -7,7 +7,7 @@ SCENARIO("Constructing a node"){
 
     GIVEN("An object to copy into the node"){
         const std::string s("copy me");
-        
+
         WHEN("The node is constructed with the copy constructor"){
             Node<std::string> n(s);
 
@@ -45,7 +45,7 @@ SCENARIO("Constructing a node"){
     GIVEN("An already constructed node"){
         Node<int> n(10);
 
-        WHEN("A new node is created on its right"){
+        WHEN("A new node is created on its right using move constructor"){
             n.right(20);
 
             THEN("The node should be created with the correct data"){
@@ -56,8 +56,33 @@ SCENARIO("Constructing a node"){
             }
         }
 
-        WHEN("A new node is created on its left"){
+        WHEN("A new node is created on its left using move constructor"){
             n.left(30);
+            THEN("The node should be created with the correct data"){
+                REQUIRE(n.left()->get());
+                REQUIRE(n.left()->get() == 30);
+                REQUIRE(n.left()->depth() == 1);
+                REQUIRE(n.left()->parent() == &n);
+            }
+        }
+
+
+        WHEN("A new node is created on its right using copy constructor"){
+            const int i = 20;
+            n.right(i);
+
+            THEN("The node should be created with the correct data"){
+                REQUIRE(n.right()->get());
+                REQUIRE(n.right()->get() == 20);
+                REQUIRE(n.right()->depth() == 1);
+                REQUIRE(n.right()->parent() == &n);
+            }
+        }
+
+        WHEN("A new node is created on its left using copy constructor"){
+            const int i = 30;
+            n.left(i);
+            
             THEN("The node should be created with the correct data"){
                 REQUIRE(n.left()->get());
                 REQUIRE(n.left()->get() == 30);

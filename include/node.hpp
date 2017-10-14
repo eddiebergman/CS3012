@@ -12,7 +12,6 @@ private:
     struct private_tag{};    
 
 public:
-
     Node(const T& data)
         : Node(nullptr, data, private_tag()) {}
 
@@ -32,32 +31,36 @@ public:
 
 
     //getters
-    int depth(){ return depth_; }
+    int depth() const { return depth_; }
     T& get() const { return data_; }
-    const Node<T>* parent(){ return parent_;}
+    const Node<T>* parent() const{ return parent_;}
     Node<T>* left() const { left_.get(); }
     Node<T>* right() const { right_.get(); }
     
-
-    //forwarding as it may be lvalue binded to data (copy), might be rvalue (move)
-    void left(T&& data){
-        left_ = std::make_unique<Node<T>>(this, std::forward<T>(data), private_tag());
+    void left(const T& data){ 
+        left_ = std::make_unique<Node<T>>(this, data, private_tag()); 
+    } 
+    void left(T&& data){ 
+        left_ = std::make_unique<Node<T>>(this, std::move(data), private_tag()); 
     }
-    
+
+    void right(const T& data){
+        right_ = std::make_unique<Node<T>>(this, data, private_tag());
+    }
     void right(T&& data)   { 
-        right_ = std::make_unique<Node<T>>(this, std::forward<T>(data), private_tag()); 
+        right_ = std::make_unique<Node<T>>(this, std::move(data), private_tag()); 
     }
 
 
 
 private:
+    const Node<T>* const parent_;
+    const int depth_;
+    T data_;
 
     std::unique_ptr<Node<T>> left_ = nullptr;
     std::unique_ptr<Node<T>> right_ = nullptr;
     
-    const Node<T>* const parent_ = nullptr;
-    const int depth_;
-    mutable T data_;
 };
 
 #endif //NODE_H
