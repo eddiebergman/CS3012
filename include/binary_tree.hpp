@@ -7,6 +7,11 @@ template <typename T>
 class BinaryTree {
 
 public:
+    BinaryTree(const T& data)
+        : root_(std::make_unique<Node<int>>(data))
+    {
+    }
+
     BinaryTree(T&& data)
         : root_(std::make_unique<Node<int>>(std::move(data)))
     {
