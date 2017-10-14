@@ -41,5 +41,29 @@ SCENARIO("Lowest Common Ancestor on a binary tree")
                 REQUIRE(1 == 0);
             }
         }
+
+        WHEN("lca called on one node not contained in the tree")
+        {
+            THEN("lca should return nullptr")
+            {
+                REQUIRE(1 == 0);
+            }
+        }
+
+        WHEN("lca called on two nodes not contained in the tree")
+        {
+            THEN("lca should return nullptr")
+            {
+                REQUIRE(1 == 0);
+            }
+        }
+
+        WHEN("lca called with a nullptr")
+        {
+            THEN("lca should return nullptr")
+            {
+                REQUIRE(1 == 0);
+            }
+        }
     }
 }
