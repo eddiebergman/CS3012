@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.9.0)
 project(lowest-common-ancestor)
 
 set(CMAKE_CXX_STANDARD 14)
-set(EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/")
+set(EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin/")
 
 #---------------
 # lowest-common-ancestor @header only library
