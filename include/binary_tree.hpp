@@ -17,15 +17,15 @@ public:
     {
     }
 
-    Node<T>* lca(const Node<T>* a, const Node<T>* b)
+    Node<T>* lca(Node<T>* const a, Node<T>* const b)
     {
         if (a == nullptr || b == nullptr)
             return nullptr;
 
-        static auto climb = [](Node<T>* n) { n = n->parent(); };
-        static auto lower_of = [](Node<T>* c1, Node<T>* c2) { return c1->depth() < c2->depth ? c1 : c2; };
-        static auto at_root = [](Node<T>* c1, Node<T>* c2) { return c1->depth() == 0 && c2->depth() == 0; };
-        static auto at_same = [](Node<T>* c1, Node<T>* c2) { return c1 == c2; };
+        static auto climb = [](Node<T>*& n){ n = n->parent(); };
+        static auto lower_of = [](Node<T>*& c1, Node<T>*& c2) -> Node<T>*& { return c1->depth() > c2->depth() ? c1 : c2; };
+        static auto at_root = [](Node<T>*& c1, Node<T>*& c2) -> bool { return c1->depth() == 0 && c2->depth() == 0; };
+        static auto at_same = [](Node<T>*& c1, Node<T>*& c2) -> bool { return c1 == c2; };
 
         Node<T>* a_climber = a;
         Node<T>* b_climber = b;
