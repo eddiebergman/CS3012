@@ -4,7 +4,7 @@
 #include <node.hpp>
 #include <string>
 
-SCENARIO("Constructing a node")
+SCENARIO("Constructing a node", "[node]")
 {
 
     GIVEN("An object to copy into the node")
@@ -108,9 +108,25 @@ SCENARIO("Constructing a node")
             }
         }
     }
+
+    GIVEN("A node with no nodes on its left or right")
+    {
+        Node<int> n(20);
+        WHEN("Asked for its left or right noed")
+        {
+            Node<int>* l = n.left();
+            Node<int>* r = n.right();
+            
+            THEN("It should return both null pointers")
+            {
+                REQUIRE(!l);
+                REQUIRE(!r);
+            }
+        }
+    }
 }
 
-SCENARIO("Node memory management tests")
+SCENARIO("Node memory management tests", "[node]")
 {
     GIVEN("Given a constructed node and its branches")
     {
@@ -122,15 +138,16 @@ SCENARIO("Node memory management tests")
         Node<int>* nlr = n.left()->right();
         WHEN("One of its branches is reassigned")
         {
-            n.left(40);
+            n.left(40)->left(50);
+            n.left()->right(60);
 
             // note: we can still use nl and nll without their branches but they're
             // no longer reserved in memory or stack
             THEN("The old branches should be free")
             {
                 // left node no longer had references to any other node
-                REQUIRE(!nl->left());
-                REQUIRE(!nl->right());
+                REQUIRE(n.left()->left() != nll);
+                REQUIRE(n.left()->right() != nlr);
             }
         }
     }

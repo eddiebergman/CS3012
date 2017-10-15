@@ -26,14 +26,14 @@ public:
 
     ~Node() = default;
 
-    explicit Node(const Node<T>* parent, const T& data, private_tag t)
+    explicit Node(Node<T>* parent, const T& data, private_tag t)
         : data_(data)
         , parent_(parent)
         , depth_(parent ? parent->depth_ + 1 : 0)
     {
     }
 
-    explicit Node(const Node<T>* parent, T&& data, private_tag t)
+    explicit Node(Node<T>* parent, T&& data, private_tag t)
         : data_(std::forward<T>(data))
         , parent_(parent)
         , depth_(parent ? parent->depth_ + 1 : 0)
@@ -74,17 +74,17 @@ public:
     // getters
     int depth() const { return depth_; }
     T& get() { return data_; }
-    const Node<T>* parent() const { return parent_; }
-    Node<T>* left() const { left_.get(); }
-    Node<T>* right() const { right_.get(); }
+    Node<T>* parent() const { return parent_; }
+    Node<T>* left() const { left_? left_.get() : nullptr; }
+    Node<T>* right() const { right_? right_.get() : nullptr; }
 
 private:
     T data_;
+    Node<T>* const parent_;
     const int depth_;
-    const Node<T>* const parent_;
 
-    std::unique_ptr<Node<T>> left_ = std::unique_ptr<Node<T>>();
-    std::unique_ptr<Node<T>> right_ = std::unique_ptr<Node<T>>();
+    std::unique_ptr<Node<T>> left_ = std::unique_ptr<Node<T>>(nullptr);
+    std::unique_ptr<Node<T>> right_ = std::unique_ptr<Node<T>>(nullptr);
 };
 
 #endif // NODE_H
