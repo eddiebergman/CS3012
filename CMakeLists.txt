@@ -18,11 +18,11 @@ set(PROJ_SOURCES_PATH "${PROJECT_SOURCE_DIR}/src")
 set(PROJ_INCLUDE_PATH "${PROJECT_SOURCE_DIR}/include")
 
 file(GLOB PROJ_SOURCES "${PROJ_SOURCES_PATH}/*.cpp")
-file(GLOB PROJ_HEADERS "${PROJ_INCLUDE_PATH}/*.hpp")
+file(GLOB PROJ_HEADERS "${PROJ_SOURCES_PATH}/*.hpp")
 
 ##set up the actual library
-add_library(${PROJ_NAME} INTERFACE)
-target_include_directories(${PROJ_NAME} INTERFACE ${PROJ_INCLUDE_PATH})
+add_library(${PROJ_NAME} STATIC ${PROJ_SOURCES} ${PROJ_HEADERS})
+target_include_directories(${PROJ_NAME} PUBLIC ${PROJ_INCLUDE_PATH})
 #
 # Cmake lowest-common-ancestor : test
 #

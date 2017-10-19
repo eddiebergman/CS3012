@@ -3,7 +3,7 @@
 #include <binary_tree.hpp>
 #include <iostream>
 #include <memory>
-#include <node.hpp>
+#include <bt-node.hpp>
 
 SCENARIO("Setting up a binary tree" , "[binary_tree]")
 {
@@ -12,12 +12,12 @@ SCENARIO("Setting up a binary tree" , "[binary_tree]")
     {
         BinaryTree<int> bt(10);
 
-        WHEN("Nodes are added to the left and right of the root with moving of data")
+        WHEN("BT_Nodes are added to the left and right of the root with moving of data")
         {
-            bt.root().left(20);
+                        bt.root().left(20);
             bt.root().right(30);
 
-            THEN("The nodes correctly instansiated in the tree")
+            THEN("The BT_Nodes correctly instansiated in the tree")
             {
                 REQUIRE(bt.root().get() == 10);
                 REQUIRE(bt.root().left()->get() == 20);
@@ -35,12 +35,12 @@ SCENARIO("Setting up a binary tree" , "[binary_tree]")
         const int i3 = 30;
         BinaryTree<int> bt(i);
 
-        WHEN("Nodes are added to the left and right of the root with copying of data")
+        WHEN("BT_Nodes are added to the left and right of the root with copying of data")
         {
             bt.root().left(i2);
             bt.root().right(i3);
 
-            THEN("The nodes correctly instansiated in the tree")
+            THEN("The BT_Nodes correctly instansiated in the tree")
             {
                 REQUIRE(bt.root().get() == i);
                 REQUIRE(bt.root().left()->get() == i2);
@@ -69,19 +69,19 @@ SCENARIO("Lowest Common Ancestor on a binary tree", "[binary_tree]")
         b.root().left(2)->left(4)->left(8)->parent()->parent()->right(5)->right(9)->parent()->left(10);
         b.root().right(3)->right(6);
         
-        Node<int>* two  = b.root().left();
-        Node<int>* nine = two->right()->right();
-        Node<int>* eight= two->left()->left();
-        Node<int>* four = two->left();
-        Node<int>* six  = b.root().right()->right();
+        BT_Node<int>* two  = b.root().left();
+        BT_Node<int>* nine = two->right()->right();
+        BT_Node<int>* eight= two->left()->left();
+        BT_Node<int>* four = two->left();
+        BT_Node<int>* six  = b.root().right()->right();
 
-        WHEN("lca called on two nodes in the tree")
+        WHEN("lca called on two BT_Nodes in the tree")
         {
-            Node<int>* r89 = b.lca(eight, nine);
-            Node<int>* r49 = b.lca(four, nine);
-            Node<int>* r61 = b.lca(six, &b.root());
-            Node<int>* r11 = b.lca(&b.root(), &b.root());
-            Node<int>* r66 = b.lca(six, six);
+            BT_Node<int>* r89 = b.lca(eight, nine);
+            BT_Node<int>* r49 = b.lca(four, nine);
+            BT_Node<int>* r61 = b.lca(six, &b.root());
+            BT_Node<int>* r11 = b.lca(&b.root(), &b.root());
+            BT_Node<int>* r66 = b.lca(six, six);
             THEN("lca should return their lowest common ancestor")
             {
                 REQUIRE(r89->get() == two->get());
@@ -92,10 +92,10 @@ SCENARIO("Lowest Common Ancestor on a binary tree", "[binary_tree]")
             }
         }
 
-        WHEN("lca called on one node not contained in the tree")
+        WHEN("lca called on one BT_Node not contained in the tree")
         {
-            Node<int> other1(1);
-            Node<int>* r10other1 = b.lca(eight, &other1);
+            BT_Node<int> other1(1);
+            BT_Node<int>* r10other1 = b.lca(eight, &other1);
 
             THEN("lca should return nullptr")
             {
@@ -103,11 +103,11 @@ SCENARIO("Lowest Common Ancestor on a binary tree", "[binary_tree]")
             }
         }
         
-        WHEN("lca called on two nodes not contained in the tree")
+        WHEN("lca called on two BT_Nodes not contained in the tree")
         {
-            Node<int> other1(1);
-            Node<int> other2(2);
-            Node<int>* rother1other2 = b.lca(&other1, &other2);
+            BT_Node<int> other1(1);
+            BT_Node<int> other2(2);
+            BT_Node<int>* rother1other2 = b.lca(&other1, &other2);
 
             THEN("lca should return nullptr")
             {
@@ -117,10 +117,10 @@ SCENARIO("Lowest Common Ancestor on a binary tree", "[binary_tree]")
 
         WHEN("lca called with a nullptr")
         {
-            Node<int>* blank1 = six->right();
-            Node<int>* blank2 = nine->left();
-            Node<int>* r8blank1 = b.lca(eight, blank1);
-            Node<int>* rblank1blank2 = b.lca(blank1, blank2);
+            BT_Node<int>* blank1 = six->right();
+            BT_Node<int>* blank2 = nine->left();
+            BT_Node<int>* r8blank1 = b.lca(eight, blank1);
+            BT_Node<int>* rblank1blank2 = b.lca(blank1, blank2);
 
             THEN("lca should return nullptr")
             {
