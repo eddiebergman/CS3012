@@ -7,7 +7,7 @@ class Node
 {
 public:
     Node(int id);
-    ~Node();
+    ~Node() = default;
 
     Node(Node &&) = delete;
     Node(const Node &) = delete;
