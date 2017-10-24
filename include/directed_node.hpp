@@ -2,13 +2,15 @@
 #define DIRECTED_NODE_H
 
 #include <node_base.hpp>
+#include <directed_node_i.hpp>
 #include <unordered_set>
 
-class DirectedNode : public NodeBase{
-
-    using Node_Set = std::unordered_set<DirectedNode*>;
+class DirectedNode : public NodeBase, public DirectedNodeI{
 
 public:
+
+    using Container = std::unordered_set<DirectedNodeI*>;
+
     DirectedNode(int id);
     ~DirectedNode();
 
@@ -16,13 +18,13 @@ public:
     void add_parent(DirectedNode* n);
     bool has_child(DirectedNode* n);
     bool has_parent(DirectedNode* n);
-    Node_Set& children();
-    Node_Set& parents();
+    Container& children();
+    Container& parents();
     
 
 private:
-    Node_Set parents_;
-    Node_Set children_;
+    Container parents_;
+    Container children_;
 
 };
 
