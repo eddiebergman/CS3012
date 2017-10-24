@@ -14,7 +14,7 @@ SCENARIO("Setting up a binary tree" , "[binary_tree]")
 
         WHEN("BT_Nodes are added to the left and right of the root with moving of data")
         {
-                        bt.root().left(20);
+            bt.root().left(20);
             bt.root().right(30);
 
             THEN("The BT_Nodes correctly instansiated in the tree")

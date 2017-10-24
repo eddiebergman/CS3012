@@ -106,7 +106,7 @@ SCENARIO("Constructing a BT_Node", "[bt-node]")
                 REQUIRE(n.left()->depth() == 1);
                 REQUIRE(n.left()->parent() == &n);
             }
-        }
+        }   
     }
 
     GIVEN("A BT_Node with no BT_Nodes on its left or right")
