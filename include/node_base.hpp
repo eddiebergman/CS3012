@@ -8,7 +8,7 @@ public:
     NodeBase(int id);
     ~NodeBase() = default;
 
-    int id();
+    int id() const;
 
 private:
     const int id_;
