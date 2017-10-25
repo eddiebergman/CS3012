@@ -1,10 +1,19 @@
 #include <binary_node.hpp>
 
-BinaryNode::BinaryNode(int id, BinaryNode* parent)
+BinaryNode::BinaryNode(int id)
     : NodeBase(id)
-    , parent_(parent)
-    , depth_(parent ? parent->depth() + 1 : 0)
 {
+}
+
+BinaryNode::BinaryNode(int id, BinaryNode& parent, Child child_side)
+    : NodeBase(id)
+    , depth_(parent.depth() + 1)
+    , parent_(&parent)
+{
+    if (child_side == Child::LEFT)
+        parent.left(*this);
+    else
+        parent.right(*this);
 }
 
 BinaryNode::~BinaryNode() = default;
@@ -14,14 +23,18 @@ int BinaryNode::depth() const
     return depth_;
 }
 
-bool BinaryNode::left(BinaryNode& l)
+void BinaryNode::left(BinaryNode& l)
 {
-    return left_ == &l;
+    left_ = &l;
+    left_->parent_ = this;
+    left_->adjust_depth(*this);
 }
 
-bool BinaryNode::right(BinaryNode& r)
+void BinaryNode::right(BinaryNode& r)
 {
-    return right_ == &r;
+    right_ = &r;
+    right_->parent_ = this;
+    right_->adjust_depth(*this);
 }
 
 BinaryNode* BinaryNode::left()
@@ -34,9 +47,9 @@ BinaryNode* BinaryNode::right()
     return right_;
 }
 
-BinaryNode& BinaryNode::parent()
+BinaryNode* BinaryNode::parent()
 {
-    return *parent_;
+    return parent_;
 }
 
 bool BinaryNode::has_child(BinaryNode& n)
@@ -51,11 +64,24 @@ bool BinaryNode::has_parent(BinaryNode& n)
 
 BinaryNode::Container BinaryNode::children()
 {
-    return Container{ left_, right_ };
+    Container c;
+    if (left_)
+        c.insert(left_);
+    if (right_)
+        c.insert(right_);
+    return c;
 }
-
 
 BinaryNode::Container BinaryNode::parents()
 {
-    return Container{parent_} ;
+    return (parent_ ? Container{ parent_ } : Container());
+}
+
+void BinaryNode::adjust_depth(const BinaryNode& new_parent)
+{
+    depth_ = new_parent.depth() + 1;
+    if (left_)
+        left_->adjust_depth(*this);
+    if (right_)
+        right_->adjust_depth(*this);
 }

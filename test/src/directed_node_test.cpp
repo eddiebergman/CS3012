@@ -1,6 +1,5 @@
 #include <catch.hpp>
 #include <directed_node.hpp>
-#include <set>
 
 TEST_CASE("Unit tests for directed node", "[directed_node][node]")
 {
