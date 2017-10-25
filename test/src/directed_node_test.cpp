@@ -49,7 +49,7 @@ TEST_CASE("Unit tests for directed node", "[directed_node][node]")
     {
         DirectedNode n2(10);
         n1.add_child(n2);
-        REQUIRE(n2.has_parent(n2));
+        REQUIRE(n1.has_child(n2));
 
     }
 }
