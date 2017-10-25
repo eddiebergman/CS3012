@@ -4,11 +4,12 @@
 #include <tree_node_i.hpp>
 #include <unordered_set>
 
-class BinaryNodeI : public TreeNodeI{
+template <typename Implementor>
+class BinaryNodeI : public virtual TreeNodeI<Implementor>{
 
 public:
-    BinaryNodeI* left();
-    BinaryNodeI* right();
+    virtual Implementor* left() = 0;
+    virtual Implementor* right() = 0;
 
 };
 

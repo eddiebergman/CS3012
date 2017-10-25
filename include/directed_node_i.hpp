@@ -3,13 +3,14 @@
 
 #include <unordered_set>
 
+template <typename Implementor>
 class DirectedNodeI {
 
 public:
-    virtual bool has_child(DirectedNodeI* n) = 0;
-    virtual bool has_parent(DirectedNodeI* n) = 0;
-    virtual std::unordered_set<DirectedNodeI*>& children() = 0;
-    virtual std::unordered_set<DirectedNodeI*>& parents() = 0;
+    virtual bool has_child(Implementor* n) = 0;
+    virtual bool has_parent(Implementor* n) = 0;
+    virtual std::unordered_set<Implementor*>& children() = 0;
+    virtual std::unordered_set<Implementor*>& parents() = 0;
 
 };
 
