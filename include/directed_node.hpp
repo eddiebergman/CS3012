@@ -14,8 +14,8 @@ public:
     DirectedNode(int id);
     ~DirectedNode();
 
-    void add_child(DirectedNode* n);
-    void add_parent(DirectedNode* n);
+    void add_child(DirectedNode& n);
+    void add_parent(DirectedNode& n);
     bool has_child(DirectedNode& n);
     bool has_parent(DirectedNode& n);
     Container children();

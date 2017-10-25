@@ -4,11 +4,11 @@ DirectedNode::DirectedNode(int id) : NodeBase(id) {}
 
 DirectedNode::~DirectedNode() = default;
 
-void DirectedNode::add_child(DirectedNode* n){
+void DirectedNode::add_child(DirectedNode& n){
     children_.insert(n);
 }
 
-void DirectedNode::add_parent(DirectedNode* n){
+void DirectedNode::add_parent(DirectedNode& n){
     parents_.insert(n);
 }
 
