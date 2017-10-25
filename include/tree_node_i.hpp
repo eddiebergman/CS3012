@@ -8,8 +8,8 @@ template <typename Implementor>
 class TreeNodeI : public virtual DirectedNodeI<Implementor> {
 
 public:
-    virtual int depth() = 0;
-    virtual Implementor* parent() = 0;
+    virtual int depth() const = 0;
+    virtual Implementor& parent() = 0;
 
 };
 

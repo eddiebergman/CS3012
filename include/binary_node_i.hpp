@@ -10,6 +10,8 @@ class BinaryNodeI : public virtual TreeNodeI<Implementor>{
 public:
     virtual Implementor* left() = 0;
     virtual Implementor* right() = 0;
+    virtual bool left(Implementor& l) = 0;
+    virtual bool right(Implementor& r) = 0;
 
 };
 

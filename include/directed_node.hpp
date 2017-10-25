@@ -5,21 +5,21 @@
 #include <directed_node_i.hpp>
 #include <unordered_set>
 
-class DirectedNode : public NodeBase, public DirectedNodeI{
+class DirectedNode : public NodeBase, public DirectedNodeI<DirectedNode>{
 
 public:
 
-    using Container = std::unordered_set<DirectedNodeI*>;
+    using Container = std::unordered_set<DirectedNode*>;
 
     DirectedNode(int id);
     ~DirectedNode();
 
     void add_child(DirectedNode* n);
     void add_parent(DirectedNode* n);
-    bool has_child(DirectedNode* n);
-    bool has_parent(DirectedNode* n);
-    Container& children();
-    Container& parents();
+    bool has_child(DirectedNode& n);
+    bool has_parent(DirectedNode& n);
+    Container children();
+    Container parents();
     
 
 private:
