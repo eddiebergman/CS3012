@@ -14,12 +14,13 @@ public:
     DirectedNode(int id);
     ~DirectedNode();
 
+    int id() const override;
     void add_child(DirectedNode& n);
     void add_parent(DirectedNode& n);
-    bool has_child(DirectedNode& n);
-    bool has_parent(DirectedNode& n);
-    Container children();
-    Container parents();
+    bool has_child(DirectedNode& n) override;
+    bool has_parent(DirectedNode& n) override;
+    Container children() override;
+    Container parents() override;
     
 
 private:

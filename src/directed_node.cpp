@@ -7,6 +7,10 @@ DirectedNode::DirectedNode(int id)
 
 DirectedNode::~DirectedNode() = default;
 
+int DirectedNode::id() const{
+    return NodeBase::id();
+}
+
 void DirectedNode::add_child(DirectedNode& n)
 {
     children_.insert(&n);

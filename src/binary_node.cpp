@@ -5,6 +5,10 @@ BinaryNode::BinaryNode(int id)
 {
 }
 
+int BinaryNode::id() const {
+    return NodeBase::id();
+}
+
 BinaryNode::BinaryNode(int id, BinaryNode& parent, Child child_side)
     : NodeBase(id)
     , depth_(parent.depth() + 1)

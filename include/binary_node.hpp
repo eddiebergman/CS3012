@@ -17,6 +17,7 @@ public:
     BinaryNode(int id, BinaryNode& parent, Child child_side);
     ~BinaryNode();
     
+    int id() const override;
     int depth() const override;
     void left(BinaryNode& l) override;
     void right(BinaryNode& r) override;
