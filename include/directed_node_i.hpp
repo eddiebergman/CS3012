@@ -8,6 +8,7 @@ template <typename Implementor,
 class DirectedNodeI {
 
 public:
+    virtual int id() const = 0;
     virtual bool has_child(Implementor& n) = 0;
     virtual bool has_parent(Implementor& n) = 0;
     virtual Container children() = 0;
