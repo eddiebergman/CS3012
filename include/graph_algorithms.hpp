@@ -20,7 +20,7 @@ USet<T*> lca(T& a, T& b)
         queue.push(&node);
         for (auto n = queue.front(); !queue.empty(); queue.pop(), n = queue.front()) {
             for (auto parent : n->parents()) {
-                if (visited.find(parent) != visited.end()) {
+                if (visited.count(parent) == 0) {
                     visited.insert(parent);
                     queue.push(parent);
                 }

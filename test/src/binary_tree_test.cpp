@@ -45,10 +45,9 @@ TEST_CASE("Creating a BinaryTree","[binary_tree]"){
     }
     
     SECTION("With a cyclic setup"){
-        nodes[9].left(nodes[0]);
-        
         std::logic_error err("false");
         try{
+            nodes[9].left(nodes[0]);
             BinaryTree tree(nodes[0]);
         }catch(const std::logic_error& e){
             err = e;
