@@ -4,7 +4,6 @@
 #include <queue>
 
 BinaryTree::BinaryTree(BinaryNode& root)
-    : nodes_()
 {
     std::queue<BinaryNode*> queue;
     queue.push(&root);
