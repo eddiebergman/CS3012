@@ -10,12 +10,17 @@ BinaryTree::BinaryTree(BinaryNode& root)
     for (BinaryNode *node = queue.front(); !queue.empty(); queue.pop(), node = queue.front()) {
         nodes_.insert(node);
         for (auto child : node->children()) {
-            queue.push(child);
+            if(nodes_.count(child) == 0)
+                queue.push(child);
+            else
+                throw std::logic_error("Tree is malformed");
+        
         }
     }
-    if(!GraphAlgorithms::isAcyclic<BinaryNode>(nodes_)){
-        throw std::logic_error("Graph is not acyclic");
-    }
+}
+
+std::unordered_set<BinaryNode*> BinaryTree::nodes(){
+    return nodes_;
 }
 
 BinaryNode* BinaryTree::lca(BinaryNode& a, BinaryNode& b)

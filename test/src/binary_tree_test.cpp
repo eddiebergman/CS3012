@@ -31,11 +31,17 @@ TEST_CASE("Creating a BinaryTree","[binary_tree]"){
     nodes[6].left(nodes[10]);
     SECTION("With a non acyclic setup"){
         BinaryTree tree(nodes[0]);
-        for(auto e : tree.nodes())
-            std::cout << e->id() << '<n';
-        for(auto e : nodes){
-            REQUIRE(tree.nodes().count(&e) == 1);
-        }
+        REQUIRE(tree.nodes().count(&nodes[0]) == 1);
+        REQUIRE(tree.nodes().count(&nodes[1]) == 1);
+        REQUIRE(tree.nodes().count(&nodes[2]) == 1);
+        REQUIRE(tree.nodes().count(&nodes[3]) == 1);
+        REQUIRE(tree.nodes().count(&nodes[4]) == 1);
+        REQUIRE(tree.nodes().count(&nodes[5]) == 1);
+        REQUIRE(tree.nodes().count(&nodes[6]) == 1);
+        REQUIRE(tree.nodes().count(&nodes[7]) == 1);
+        REQUIRE(tree.nodes().count(&nodes[8]) == 1);
+        REQUIRE(tree.nodes().count(&nodes[9]) == 1);
+        REQUIRE(tree.nodes().count(&nodes[10]) == 1);
     }
     
     SECTION("With a cyclic setup"){
