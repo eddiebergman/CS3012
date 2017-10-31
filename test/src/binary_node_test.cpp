@@ -51,6 +51,18 @@ TEST_CASE("Binary Node children methods", "[binary_node][node]")
     {
         REQUIRE(parent.right() == nullptr);
     }
+
+    SECTION("Set an ancestor as a child"){
+        BinaryNode child(2);
+        parent.left(child);
+        std::logic_error err("false");
+        try{
+            child.left(parent);
+        }catch(const std::logic_error& e){
+            err = e;
+        }
+        REQUIRE(err.what() != "false");
+    }
 }
 
 TEST_CASE("BinaryNode relatives checking", "[binary_node][node]")

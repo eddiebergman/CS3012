@@ -30,7 +30,7 @@ public:
     Container parents() override;
 
 private:
-    void adjust_depth(const BinaryNode& new_parent);
+    void adjust_depth(const BinaryNode& original_parent, const BinaryNode& new_parent);
     
     int depth_ = 0;
     BinaryNode* parent_ = nullptr;

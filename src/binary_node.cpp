@@ -31,14 +31,14 @@ void BinaryNode::left(BinaryNode& l)
 {
     left_ = &l;
     left_->parent_ = this;
-    left_->adjust_depth(*this);
+    left_->adjust_depth(*this, *this);
 }
 
 void BinaryNode::right(BinaryNode& r)
 {
     right_ = &r;
     right_->parent_ = this;
-    right_->adjust_depth(*this);
+    right_->adjust_depth(*this, *this);
 }
 
 BinaryNode* BinaryNode::left()
@@ -81,11 +81,14 @@ BinaryNode::Container BinaryNode::parents()
     return (parent_ ? Container{ parent_ } : Container());
 }
 
-void BinaryNode::adjust_depth(const BinaryNode& new_parent)
+void BinaryNode::adjust_depth(const BinaryNode& original_parent, const BinaryNode& new_parent)
 {
+    if(this == &original_parent){
+        throw std::logic_error("Can't make cycle in binary nodes");
+    }
     depth_ = new_parent.depth() + 1;
     if (left_)
-        left_->adjust_depth(*this);
+        left_->adjust_depth(original_parent, *this);
     if (right_)
-        right_->adjust_depth(*this);
+        right_->adjust_depth(original_parent, *this);
 }
