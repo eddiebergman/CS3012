@@ -17,13 +17,13 @@ template <typename T>
 USet<DNode<T>*> lca(DNode<T>* a, DNode<T>* b)
 {
     static auto ancestors = [](DNode<T>* node) {
-        std::queue<DNode*> queue;
-        USet<DNode*> visited;
+        std::queue<DNode<T>*> queue;
+        USet<DNode<T>*> visited;
         visited.insert(node);
         queue.push(node);
-        for(auto n = queue.front(); !queue.empty(); queue.pop(), n = queue.front()){
-            for(auto parent : n.parents()){
-                if(visited.find(parent) != visited.end()){
+        for (auto n = queue.front(); !queue.empty(); queue.pop(), n = queue.front()) {
+            for (auto parent : n->parents()) {
+                if (visited.find(parent) != visited.end()) {
                     visited.insert(parent);
                     queue.push(parent);
                 }
@@ -33,11 +33,11 @@ USet<DNode<T>*> lca(DNode<T>* a, DNode<T>* b)
     };
 
     static auto intersection = [](USet<DNode<T>*> a, USet<DNode<T>*> b) {
-        USet<DNode*> intersect;
-        USet<DNode*>& smaller_set = a.size() < b.size()? a : b;
-        USet<DNode*>& larger_set = smaller_set == a? b : a;
-        for(auto node : smaller_set){
-            if(larger_set.find(node) != larger_set.end()){
+        USet<DNode<T>*> intersect;
+        USet<DNode<T>*>& smaller_set = a.size() < b.size() ? a : b;
+        USet<DNode<T>*>& larger_set = smaller_set == a ? b : a;
+        for (auto node : smaller_set) {
+            if (larger_set.find(node) != larger_set.end()) {
                 intersect.insert(node);
             }
         }
@@ -45,10 +45,10 @@ USet<DNode<T>*> lca(DNode<T>* a, DNode<T>* b)
     };
 
     static auto disjoint = [](USet<DNode<T>*> a, USet<DNode<T>*> b) {
-        USet<DNode*>& smaller_set = a.size() < b.size()? a : b;
-        USet<DNode*>& larger_set = smaller_set == a? b : a;
-        for(auto node : smaller_set){
-            if(larger_set.find(node) != larger_set.end()){
+        USet<DNode<T>*>& smaller_set = a.size() < b.size() ? a : b;
+        USet<DNode<T>*>& larger_set = smaller_set == a ? b : a;
+        for (auto node : smaller_set) {
+            if (larger_set.find(node) != larger_set.end()) {
                 return false;
             }
         }
@@ -67,6 +67,36 @@ USet<DNode<T>*> lca(DNode<T>* a, DNode<T>* b)
     }
     return lca_set;
 }
+
+template <typename T>
+bool isAcyclic(vector<DNode<T>*> graph_nodes)
+{
+    USet<DNode<T>*> temp_marked;
+    USet<DNode<T>*> marked;
+    bool acyclic = true;
+
+    static auto visit = [&](DNode<T>* n) {
+        if (temp_marked.count(n) == 1 || !acyclic) {
+            acyclic = false;
+            return;
+        }
+        if (marked.count(n) == 0) {
+            temp_marked.insert(n);
+            for (auto child : n->children()) {
+                visit(child);
+            }
+            marked.insert(n);
+            temp_marked.erase(n);
+        }
+    }
+
+    for (auto node : graph_nodes)
+    {
+        visit(n);
+    }
+    return acyclic;
+}
+
 };
 
 #endif //GRAPH_ALGORITHMS_H
