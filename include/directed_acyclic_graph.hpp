@@ -4,11 +4,11 @@
 #include <directed_node.hpp>
 #include <unordered_set>
 
-class DirectedGraph{
+class DirectedAcyclicGraph{
 
 public:
-    DirectedGraph(DirectedNode& graph_node);
-    ~DirectedGraph() = default;
+    DirectedAcyclicGraph(DirectedNode& graph_node);
+    ~DirectedAcyclicGraph() = default;
     std::unordered_set<DirectedNode*> lca(DirectedNode& one,DirectedNode& two);
     std::unordered_set<DirectedNode*> nodes();
 private:

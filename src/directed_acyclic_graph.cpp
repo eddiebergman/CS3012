@@ -1,10 +1,10 @@
-#include <directed_graph.hpp>
+#include <directed_acyclic_graph.hpp>
 #include <directed_node.hpp>
 #include <graph_algorithms.hpp>
 #include <unordered_set>
 #include <queue>
 
-DirectedGraph::DirectedGraph(DirectedNode& graph_node){
+DirectedAcyclicGraph::DirectedAcyclicGraph(DirectedNode& graph_node){
     std::unordered_set<DirectedNode*> visited;
     std::queue<DirectedNode*> queue;
     queue.push(&graph_node);
@@ -28,6 +28,6 @@ DirectedGraph::DirectedGraph(DirectedNode& graph_node){
     }
 }
 
-std::unordered_set<DirectedNode*> DirectedGraph::lca(DirectedNode& a, DirectedNode& b){
+std::unordered_set<DirectedNode*> DirectedAcyclicGraph::lca(DirectedNode& a, DirectedNode& b){
     return GraphAlgorithms::lca<DirectedNode>(a, b);
 }
