@@ -72,7 +72,7 @@ bool isAcyclic(USet<T*>& graph_nodes)
     USet<T*> marked;
     bool acyclic = true;
 
-    static auto visit = [&](auto&& self, T* n) -> void {
+    auto visit = [&](auto&& self, T* n) -> void {
         if (temp_marked.count(n) == 1 || !acyclic) {
             acyclic = false;
             return;

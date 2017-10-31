@@ -28,6 +28,10 @@ DirectedAcyclicGraph::DirectedAcyclicGraph(DirectedNode& graph_node){
     }
 }
 
+std::unordered_set<DirectedNode*> DirectedAcyclicGraph::nodes(){
+    return nodes_;
+}
+
 std::unordered_set<DirectedNode*> DirectedAcyclicGraph::lca(DirectedNode& a, DirectedNode& b){
     return GraphAlgorithms::lca<DirectedNode>(a, b);
 }
